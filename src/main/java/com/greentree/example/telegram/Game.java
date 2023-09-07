@@ -2,6 +2,7 @@ package com.greentree.example.telegram;
 
 import com.greentree.commons.util.iterator.IteratorUtil;
 import com.greentree.commons.util.iterator.SizedIterable;
+import com.greentree.example.telegram.ai.CellState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -10,6 +11,7 @@ public class Game {
 
     private final CellState[][] cells;
     private final int lineToWin;
+
     public Game() {
         this(3, 3, 3);
     }
@@ -155,7 +157,7 @@ public class Game {
                 resultY.get(j - i + cells.length - 1).add(cells[i][j]);
             }
         }
-        var result = new ArrayList<List<T>>();
+        var result = new HashSet<List<T>>(resultX.size() + resultY.size());
         result.addAll(resultX);
         result.addAll(resultY);
         return result;

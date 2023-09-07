@@ -1,4 +1,6 @@
-package com.greentree.example.telegram;
+package com.greentree.example.telegram.ai;
+
+import com.greentree.example.telegram.Game;
 
 public interface AiInterface {
 

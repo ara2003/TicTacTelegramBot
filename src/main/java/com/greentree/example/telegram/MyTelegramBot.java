@@ -1,6 +1,9 @@
 package com.greentree.example.telegram;
 
 import com.greentree.commons.util.collection.FunctionAutoGenerateMap;
+import com.greentree.example.telegram.state.ChatState;
+import com.greentree.example.telegram.state.PreStartState;
+import com.greentree.example.telegram.state.StartXOState;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,14 +22,17 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
 
+    //    private final Map<Long, ChatState> states = new FunctionAutoGenerateMap<>(() ->
+//            new PreStartState(
+//                    new ChooseState("Выберите игру",
+//                            Map.of(
+//                                    "Крестики-Нолики", new StartXOState()
+//                            )
+//                    )
+//            )
+//    );
     private final Map<Long, ChatState> states = new FunctionAutoGenerateMap<>(() ->
-            new PreStartState(
-                    new ChooseState("Выберите игру",
-                            Map.of(
-                                    "Крестики-Нолики", new StartXOState()
-                            )
-                    )
-            )
+            new PreStartState(new StartXOState())
     );
 
     @Override

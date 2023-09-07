@@ -1,24 +1,22 @@
-package com.greentree.example.telegram;
+package com.greentree.example.telegram.ai;
 
 import com.greentree.commons.util.cortege.Pair;
+import com.greentree.example.telegram.Game;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public record SmartAiController(AiController controller) implements AiController {
+public record SmartAiController() implements AiController {
 
     @Override
     public Pair<Integer, Integer> move(AiInterface api) {
         var info = new Info(api.toGame());
-//        System.out.println();
-//        System.out.println(info.game + " " + info.winCount() + " " + info.loseCount() + ' ' + info.drawCount());
-//        for (var c : info.children)
-//            System.out.println(c.game + " " + c.winCount() + " " + c.loseCount() + " " + c.drawCount());
-        var result = info.bestMove();
-        if (result != null)
-            return result;
-        return controller.move(api);
+        System.out.println();
+        System.out.println(info.game + " " + info.winRate());
+        for (var c : info.children)
+            System.out.println(c.game + " " + c.winRate());
+        return info.bestMove();
     }
 
     private static class Info {
@@ -51,13 +49,6 @@ public record SmartAiController(AiController controller) implements AiController
             return children.get(0);
         }
 
-        public ChildInfo nbestChild() {
-            children.sort(Comparator.comparing(x -> x.winRate()));
-            if (children.isEmpty())
-                return null;
-            return children.get(0);
-        }
-
         public int winCount() {
             if (win == CellState.O)
                 return 1;
@@ -70,11 +61,20 @@ public record SmartAiController(AiController controller) implements AiController
         }
 
         public float loseRate() {
-            return loseCount() * 1f / sumCount();
+            return 1 - winRate();
         }
 
         public float winRate() {
-            return winCount() * 1f / sumCount();
+            if (win == CellState.X)
+                return 1;
+            if (win == CellState.O)
+                return 0;
+            if (win == CellState.Empty)
+                return 0.1f;
+            var result = 0f;
+            for (var c : children)
+                result += c.winRate();
+            return result / children.size();
         }
 
         public int loseCount() {

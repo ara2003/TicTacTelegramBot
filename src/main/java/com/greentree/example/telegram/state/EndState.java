@@ -1,4 +1,4 @@
-package com.greentree.example.telegram;
+package com.greentree.example.telegram.state;
 
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;

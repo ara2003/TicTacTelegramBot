@@ -1,5 +1,10 @@
-package com.greentree.example.telegram;
+package com.greentree.example.telegram.state;
 
+import com.greentree.example.telegram.Game;
+import com.greentree.example.telegram.ai.AiController;
+import com.greentree.example.telegram.ai.CellState;
+import com.greentree.example.telegram.ai.GameAiInterface;
+import com.greentree.example.telegram.ai.SmartAiController;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -13,7 +18,8 @@ import java.util.List;
 public record StartXOState(Game game, AiController controller) implements ChatState {
 
     public StartXOState() {
-        this(new Game(), new SmartAiController(new Center(new NotLose(new RandomPosition()))));
+        this(new Game(), new SmartAiController());
+//        this(new Game(), new Center(new NotLose(new RandomPosition())));
     }
 
     @Override
