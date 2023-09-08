@@ -57,14 +57,6 @@ public class Game {
     }
 
     public CellState getWin() {
-        A:
-        {
-            for (var x = 0; x < getWidth(); x++)
-                for (var y = 0; y < getHeight(); y++)
-                    if (!taken(x, y))
-                        break A;
-            return CellState.Empty;
-        }
         for (var row : cells) {
             if (checkWinLine(row, CellState.X))
                 return CellState.X;
@@ -85,11 +77,15 @@ public class Game {
             if (checkWinLine(diagonal, CellState.O))
                 return CellState.O;
         }
+        A:
+        {
+            for (var x = 0; x < getWidth(); x++)
+                for (var y = 0; y < getHeight(); y++)
+                    if (!taken(x, y))
+                        break A;
+            return CellState.Empty;
+        }
         return null;
-    }
-
-    public boolean taken(int x, int y) {
-        return get(x, y) != CellState.Empty;
     }
 
     private boolean checkWinLine(CellState[] row, CellState win) {
@@ -161,6 +157,10 @@ public class Game {
         result.addAll(resultX);
         result.addAll(resultY);
         return result;
+    }
+
+    public boolean taken(int x, int y) {
+        return get(x, y) != CellState.Empty;
     }
 
     private boolean checkWinLine(SizedIterable<CellState> line, CellState win) {

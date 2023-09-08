@@ -12,10 +12,7 @@ public record SmartAiController() implements AiController {
     @Override
     public Pair<Integer, Integer> move(AiInterface api) {
         var info = new Info(api.toGame());
-        System.out.println();
-        System.out.println(info.game + " " + info.winRate());
-        for (var c : info.children)
-            System.out.println(c.game + " " + c.winRate());
+        System.out.println(info.winRate());
         return info.bestMove();
     }
 
@@ -49,6 +46,17 @@ public record SmartAiController() implements AiController {
             return children.get(0);
         }
 
+        public float winRate() {
+            if (win == CellState.O)
+                return 1;
+            if (win != null)
+                return 0;
+            var sum = 1f;
+            for (var c : children)
+                sum *= (1 - c.winRate());
+            return sum * .9f;
+        }
+
         public int winCount() {
             if (win == CellState.O)
                 return 1;
@@ -60,23 +68,6 @@ public record SmartAiController() implements AiController {
             return sum;
         }
 
-        public float loseRate() {
-            return 1 - winRate();
-        }
-
-        public float winRate() {
-            if (win == CellState.X)
-                return 1;
-            if (win == CellState.O)
-                return 0;
-            if (win == CellState.Empty)
-                return 0.1f;
-            var result = 0f;
-            for (var c : children)
-                result += c.winRate();
-            return result / children.size();
-        }
-
         public int loseCount() {
             if (win == CellState.X)
                 return 1;
@@ -86,10 +77,6 @@ public record SmartAiController() implements AiController {
             for (var c : children)
                 sum += c.winCount();
             return sum;
-        }
-
-        public float drawRate() {
-            return drawCount() * 1f / sumCount();
         }
 
         public int drawCount() {
@@ -104,7 +91,7 @@ public record SmartAiController() implements AiController {
         }
 
         private int sumCount() {
-            return loseCount() + winCount();
+            return loseCount() + winCount() + drawCount();
         }
 
         private static class ChildInfo extends Info {

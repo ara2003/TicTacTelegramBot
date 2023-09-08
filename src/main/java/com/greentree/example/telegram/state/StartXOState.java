@@ -1,10 +1,7 @@
 package com.greentree.example.telegram.state;
 
 import com.greentree.example.telegram.Game;
-import com.greentree.example.telegram.ai.AiController;
-import com.greentree.example.telegram.ai.CellState;
-import com.greentree.example.telegram.ai.GameAiInterface;
-import com.greentree.example.telegram.ai.SmartAiController;
+import com.greentree.example.telegram.ai.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -19,11 +16,14 @@ public record StartXOState(Game game, AiController controller) implements ChatSt
 
     public StartXOState() {
         this(new Game(), new SmartAiController());
+//        this(new Game(), new NotLose(new SmartAiController()));
 //        this(new Game(), new Center(new NotLose(new RandomPosition())));
     }
 
     @Override
     public ChatState onCallback(AbsSender sender, CallbackQuery query) throws TelegramApiException {
+        var name = sender.getMe().getUserName();
+        System.out.println(name);
         {
             var pos = Integer.parseInt(query.getData());
             var x = pos / game().getWidth();
@@ -48,9 +48,9 @@ public record StartXOState(Game game, AiController controller) implements ChatSt
         if (win != null) {
             var send = new SendMessage();
             if (win == CellState.Empty)
-                send.setText("draw");
+                send.setText("Ничья");
             else
-                send.setText(win + " win");
+                send.setText(win + " Победил");
             send.setChatId(chatId);
             send.setReplyMarkup(table());
             sender.execute(send);
