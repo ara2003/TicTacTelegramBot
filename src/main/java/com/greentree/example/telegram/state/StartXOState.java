@@ -1,7 +1,10 @@
 package com.greentree.example.telegram.state;
 
 import com.greentree.example.telegram.Game;
-import com.greentree.example.telegram.ai.*;
+import com.greentree.example.telegram.ai.AiController;
+import com.greentree.example.telegram.ai.CellState;
+import com.greentree.example.telegram.ai.GameAiInterface;
+import com.greentree.example.telegram.ai.SmartAiController;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -22,8 +25,6 @@ public record StartXOState(Game game, AiController controller) implements ChatSt
 
     @Override
     public ChatState onCallback(AbsSender sender, CallbackQuery query) throws TelegramApiException {
-        var name = sender.getMe().getUserName();
-        System.out.println(name);
         {
             var pos = Integer.parseInt(query.getData());
             var x = pos / game().getWidth();
