@@ -11,7 +11,6 @@ public record SmartAiController() implements AiController {
 
     @Override
     public Pair<Integer, Integer> move(AiInterface api) {
-        System.out.println("a");
         var info = new Info(api.toGame(), CellState.O);
         return info.bestMove();
     }
