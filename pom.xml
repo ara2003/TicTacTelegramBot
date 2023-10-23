@@ -21,6 +21,7 @@
         <junit.version>5.5.2</junit.version>
         <java.version>20</java.version>
         <commons.version>0.3.4</commons.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
@@ -112,6 +113,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <executions>
                     <!-- Replacing default-compile as it is treated specially by Maven -->
                     <execution>
