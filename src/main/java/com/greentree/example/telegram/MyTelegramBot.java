@@ -62,6 +62,8 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void onMessage(Message message) throws TelegramApiException {
         long chat_id = message.getChatId();
         var state = states.remove(chat_id);
+        if (state == null)
+            state = new PreStartState(new StartXOState());
         var next_state = state.onMessage(this, message);
         if (next_state == null)
             next_state = new PreStartState(new StartXOState());
@@ -72,6 +74,8 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void onCallback(CallbackQuery query) throws TelegramApiException {
         long chat_id = query.getMessage().getChatId();
         var state = states.remove(chat_id);
+        if (state == null)
+            state = new PreStartState(new StartXOState());
         var next_state = state.onCallback(this, query);
         if (next_state == null)
             next_state = new PreStartState(new StartXOState());
