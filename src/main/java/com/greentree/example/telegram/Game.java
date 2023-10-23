@@ -1,9 +1,6 @@
 package com.greentree.example.telegram;
 
-import com.greentree.commons.util.iterator.IteratorUtil;
-import com.greentree.commons.util.iterator.SizedIterable;
 import com.greentree.example.telegram.ai.CellState;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -103,8 +100,8 @@ public class Game {
         return false;
     }
 
-    private static <T> Iterable<Iterable<T>> columns(T[][] cells) {
-        var result = new ArrayList<Iterable<T>>();
+    private static <T> Iterable<Collection<T>> columns(T[][] cells) {
+        var result = new ArrayList<Collection<T>>();
         for (int i = 0; i < cells[0].length; i++) {
             var column = new ArrayList<T>();
             result.add(column);
@@ -115,22 +112,20 @@ public class Game {
         return result;
     }
 
-    private boolean checkWinLine(Iterable<CellState> line, CellState win) {
-        if (line instanceof SizedIterable<CellState> s)
-            return checkWinLine(s, win);
-        var size = IteratorUtil.size(line);
-        return checkWinLine(new SizedIterable<>() {
-            @Override
-            public int size() {
-                return size;
+    private boolean checkWinLine(Collection<CellState> line, CellState win) {
+        int count = 0, i = 0;
+        var iter = line.iterator();
+        while (i++ < line.size() - lineToWin + count + 1) {
+            var cell = iter.next();
+            if (cell == win) {
+                count++;
+                if (count >= lineToWin)
+                    return true;
+            } else {
+                count = 0;
             }
-
-            @NotNull
-            @Override
-            public Iterator<CellState> iterator() {
-                return line.iterator();
-            }
-        }, win);
+        }
+        return false;
     }
 
     public static <T> Iterable<? extends Collection<T>> diagonal(T[][] cells) {
@@ -161,22 +156,6 @@ public class Game {
 
     public boolean taken(int x, int y) {
         return get(x, y) != CellState.Empty;
-    }
-
-    private boolean checkWinLine(SizedIterable<CellState> line, CellState win) {
-        int count = 0, i = 0;
-        var iter = line.iterator();
-        while (i++ < line.size() - lineToWin + count + 1) {
-            var cell = iter.next();
-            if (cell == win) {
-                count++;
-                if (count >= lineToWin)
-                    return true;
-            } else {
-                count = 0;
-            }
-        }
-        return false;
     }
 
     public Game inverse() {

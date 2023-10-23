@@ -38,7 +38,7 @@ public record StartXOState(Game game, AiController controller) implements ChatSt
                 return null;
         }
         var move = controller.move(new GameAiInterface(game, CellState.O));
-        game.set(move.first, move.seconde, CellState.O);
+        game.set(move.getFirst(), move.getSecond(), CellState.O);
         if (win(sender, query.getMessage().getChatId()))
             return null;
         return this;

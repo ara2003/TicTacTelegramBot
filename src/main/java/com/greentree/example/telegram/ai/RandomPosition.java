@@ -1,6 +1,6 @@
 package com.greentree.example.telegram.ai;
 
-import com.greentree.commons.util.cortege.Pair;
+import kotlin.Pair;
 
 public class RandomPosition implements AiController {
 

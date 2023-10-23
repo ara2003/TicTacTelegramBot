@@ -1,7 +1,7 @@
 package com.greentree.example.telegram.ai;
 
-import com.greentree.commons.util.cortege.Pair;
 import com.greentree.example.telegram.Game;
+import kotlin.Pair;
 
 import java.util.ArrayList;
 import java.util.Comparator;

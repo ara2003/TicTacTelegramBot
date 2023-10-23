@@ -1,6 +1,5 @@
 package com.greentree.example.telegram;
 
-import com.greentree.commons.util.collection.FunctionAutoGenerateMap;
 import com.greentree.example.telegram.state.ChatState;
 import com.greentree.example.telegram.state.PreStartState;
 import com.greentree.example.telegram.state.StartXOState;
@@ -13,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -31,9 +31,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 //                    )
 //            )
 //    );
-    private final Map<Long, ChatState> states = new FunctionAutoGenerateMap<>(() ->
-            new PreStartState(new StartXOState())
-    );
+    private final Map<Long, ChatState> states = new HashMap<>();
 
     @Override
     public String getBotUsername() {
@@ -66,9 +64,8 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         var state = states.remove(chat_id);
         var next_state = state.onMessage(this, message);
         if (next_state == null)
-            next_state = states.get(chat_id);
-        else
-            states.put(chat_id, next_state);
+            next_state = new PreStartState(new StartXOState());
+        states.put(chat_id, next_state);
         next_state.init(this, chat_id);
     }
 
@@ -77,9 +74,8 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         var state = states.remove(chat_id);
         var next_state = state.onCallback(this, query);
         if (next_state == null)
-            next_state = states.get(chat_id);
-        else
-            states.put(chat_id, next_state);
+            next_state = new PreStartState(new StartXOState());
+        states.put(chat_id, next_state);
         next_state.init(this, chat_id);
     }
 
