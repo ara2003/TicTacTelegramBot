@@ -41,7 +41,7 @@ public record SmartAiController() implements AiController {
         }
 
         public ChildInfo bestChild() {
-            return children.stream().min((Comparator.comparing(x -> x.winRate()))).get();
+            return children.stream().min((Comparator.comparing(x -> -x.winRate()))).get();
         }
 
         public float winRate() {
