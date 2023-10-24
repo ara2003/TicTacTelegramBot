@@ -1,4 +1,4 @@
-FROM maven:microsoft-openjdk-21-ubuntu
+FROM maven:3.9.5-sapmachine-21
 COPY src /home/app/src
 COPY pom.xml /home/app
 
