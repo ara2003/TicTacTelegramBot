@@ -1,4 +1,4 @@
-FROM maven:3.8.3-openjdk-21
+FROM maven:3.9.5-openjdk-21
 COPY src /home/app/src
 COPY pom.xml /home/app
 
