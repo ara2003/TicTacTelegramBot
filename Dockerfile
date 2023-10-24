@@ -7,7 +7,7 @@ RUN echo "$SECRET_FILE" > /home/app/src/main/resources/application-secret.proper
 
 RUN mvn -B -f /home/app/pom.xml clean package
 
-FROM amazoncorretto:17.0.3-alpine as corretto-jdk
+FROM openjdk:21 as corretto-jdk
 
 # требуется, чтобы работал strip-debug
 
