@@ -6,4 +6,4 @@
 **/.project
 **/.classpath
 **/*.iml
-**/application-secret.properties
+**/*-secret.properties
