@@ -1,4 +1,4 @@
-FROM maven:3.9.5-openjdk-21
+FROM maven:microsoft-openjdk-21-ubuntu
 COPY src /home/app/src
 COPY pom.xml /home/app
 
