@@ -7,10 +7,9 @@ RUN echo "$SECRET_FILE" > /home/app/src/main/resources/application-secret.proper
 
 RUN mvn -B -f /home/app/pom.xml clean package
 
-FROM openjdk:21 as corretto-jdk
+FROM amazoncorretto:21-alpine as corretto-jdk
 
 # требуется, чтобы работал strip-debug
-
 RUN apk add --no-cache binutils
 
 # собираем маленький JRE-образ
