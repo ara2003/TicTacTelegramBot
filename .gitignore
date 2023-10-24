@@ -1,6 +1,9 @@
-**/target/
+**/target/*/
+**/target/*.jar
+**/target/*.exec
 **/.settings/
 **/.idea/
 **/.project
 **/.classpath
 **/*.iml
+**/application-secret.properties
