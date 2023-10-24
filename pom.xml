@@ -67,7 +67,7 @@
     </dependencies>
 
     <build>
-        <finalName>bot</finalName>
+        <finalName>application</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
