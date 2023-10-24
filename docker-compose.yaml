@@ -6,8 +6,6 @@ services:
     pull_policy: always
     networks:
       - main-net
-    volumes:
-      - .m2:/root/.m2
 
 networks:
   main-net:
