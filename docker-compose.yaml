@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  api_service:
+    image: "ghcr.io/ara2003/tic-tac-telegram:master"
+    restart: always
+    pull_policy: always
+    networks:
+      - main-net
+    volumes:
+      - .m2:/root/.m2
+
+networks:
+  main-net:
