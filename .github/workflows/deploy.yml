@@ -10,9 +10,9 @@ name: Deploy docker image
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "*" ]
   workflow_dispatch:
 
 env:
@@ -34,13 +34,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: 'Set up latest Oracle JDK 21'
-        uses: oracle-actions/setup-java@v1
-        with:
-          website: oracle.com
-          release: 21
-      - name: Maven Package
-        run: mvn -B clean compile package -DskipTests
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
