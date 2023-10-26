@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public record SmartAiController() implements AiController {
+public record TreeSmartAiController() implements AiController {
 
     @Override
     public Pair<Integer, Integer> move(AiInterface api) {
