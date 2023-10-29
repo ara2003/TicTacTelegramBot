@@ -22,14 +22,7 @@ private data class GameInfo(val x: Int, val y: Int, val game: Game)
 class TreeSmartAiController : AiController {
 
 	override fun move(api: AiInterface): Pair<Int, Int> {
-		val start = System.nanoTime()
-		try {
-			println(api.toGame())
-			return bestMove(api.toGame())
-		} finally {
-			val end = System.nanoTime()
-			println((end - start) / 1_000_000_000.0)
-		}
+		return bestMove(api.toGame())
 	}
 
 	private fun bestMove(game: Game) = bestChild(game).move
