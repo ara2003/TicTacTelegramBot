@@ -25,34 +25,6 @@ public class Game {
                 arr[i] = CellState.Empty;
     }
 
-    @Override
-    public String toString() {
-        var builder = new StringBuilder();
-        for (int x = 0; x < getWidth(); x++) {
-            for (int y = 0; y < getHeight(); y++) {
-                builder.append(switch (get(x, y)) {
-                    case Empty -> "-";
-                    default -> get(x, y).toString();
-                });
-                builder.append(' ');
-            }
-            builder.append('\n');
-        }
-        return builder.toString();
-    }
-
-    public int getWidth() {
-        return cells.length;
-    }
-
-    public int getHeight() {
-        return cells[0].length;
-    }
-
-    public CellState get(int x, int y) {
-        return cells[x][y];
-    }
-
     public CellState getWin() {
         for (var row : cells) {
             if (checkWinLine(row, CellState.X))
@@ -154,8 +126,20 @@ public class Game {
         return result;
     }
 
+    public int getWidth() {
+        return cells.length;
+    }
+
+    public int getHeight() {
+        return cells[0].length;
+    }
+
     public boolean taken(int x, int y) {
         return get(x, y) != CellState.Empty;
+    }
+
+    public CellState get(int x, int y) {
+        return cells[x][y];
     }
 
     public Game inverse() {
@@ -179,6 +163,37 @@ public class Game {
         if (cell != CellState.Empty && taken(x, y))
             throw new IllegalArgumentException(x + " " + y + " already set " + get(x, y));
         cells[x][y] = cell;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(lineToWin);
+        result = 31 * result + Arrays.deepHashCode(cells);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return lineToWin == game.lineToWin && Arrays.deepEquals(cells, game.cells);
+    }
+
+    @Override
+    public String toString() {
+        var builder = new StringBuilder();
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
+                builder.append(switch (get(x, y)) {
+                    case Empty -> "-";
+                    default -> get(x, y).toString();
+                });
+                builder.append(' ');
+            }
+            builder.append('\n');
+        }
+        return builder.toString();
     }
 
 }

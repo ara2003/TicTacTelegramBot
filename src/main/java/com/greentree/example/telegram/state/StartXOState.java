@@ -18,7 +18,7 @@ import java.util.List;
 public record StartXOState(Game game, AiController controller) implements ChatState {
 
     public StartXOState() {
-        this(new Game(), new TreeSmartAiController());
+        this(new Game(4, 4, 4), new TreeSmartAiController());
 //        this(new Game(), new NotLose(new SmartAiController()));
 //        this(new Game(), new Center(new NotLose(new RandomPosition())));
     }

@@ -21,7 +21,7 @@ public record GameAiInterface(Game game, CellState my) implements AiInterface {
 
     @Override
     public int getHeight() {
-        return game.getWidth();
+        return game.getHeight();
     }
 
     @Override
